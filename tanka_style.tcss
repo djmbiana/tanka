@@ -34,6 +34,14 @@ ScrollableContainer {
     scrollbar-size: 1 1;
 }
 
+ResultsScreen Input {
+    background: #0a0a0a;
+    color: #ffb000;
+    border: none #ffb000;
+    width: 50%;
+    height: 1;
+}
+
 Static {
     color: #ffb000;
 }

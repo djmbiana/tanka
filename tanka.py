@@ -68,12 +68,16 @@ class ResultsScreen(Screen):
             for s in similar:
                 output.append(f"  ◦ {s['name']}")
 
-        output.append("\n\n ← (esc) back to search")
         yield ScrollableContainer(Static("\n".join(output)), id="results")
+        with Center():
+            yield Input(placeholder="search artist · /quit to exit", id="search")
 
-    def on_key(self, event) -> None:
-        if event.key == "escape":
+    def on_input_submitted(self, event: Input.Submitted) -> None:
+        if event.value == "/quit":
+            self.app.exit()
+        elif event.value:
             self.app.pop_screen()
+            self.app.push_screen(ResultsScreen(event.value))
 
 
 class TankaApp(App):
