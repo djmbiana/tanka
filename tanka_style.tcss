@@ -1,0 +1,23 @@
+Screen {
+    background: #0a0a0a;
+    color: #ffb000;
+}
+
+Input {
+    background: #0a0a0a;
+    color: #ffb000;
+    border: tall #ffb000;
+    width: 100%;
+}
+
+Static {
+    color: #ffb000;
+}
+
+Header {
+    display: none;
+}
+
+Footer {
+    display: none;
+}

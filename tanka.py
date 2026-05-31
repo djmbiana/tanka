@@ -8,7 +8,7 @@ import fetcher as fe
 class SearchScreen(Screen):
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Static(" Sonnet")
+        yield Static(" Tanka")
         yield Input(placeholder="Search for an artist...")
         yield Footer()
 
@@ -57,11 +57,13 @@ class ResultsScreen(Screen):
             self.app.pop_screen()
 
 
-class SonnetApp(App):
+class TankaApp(App):
+    CSS_PATH = "tanka_style.tcss"
+
     def on_mount(self) -> None:
         self.push_screen(SearchScreen())
 
 
 if __name__ == "__main__":
-    app = SonnetApp()
+    app = TankaApp()
     app.run()
