@@ -1,24 +1,28 @@
-import json
 import os
 
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
-
 API = os.getenv("API_KEY")
-artist = input("Search for an artist: ")
-url = f"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={API}&format=json"
 
-response = requests.get(url)
-parser = response.json()
 
-artist_name = parser["artist"]["name"]
-listeners = parser["artist"]["stats"]["listeners"]
-play_count = parser["artist"]["stats"]["playcount"]
-artist_summary = parser["artist"]["bio"]["summary"]
+def fetch_artist(artist):
+    url = f"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={API}&format=json"
+    response = requests.get(url)
+    parser = response.json()
 
-print(artist_name)
-print(listeners)
-print(play_count)
-print(artist_summary)
+    return {
+        "name": parser["artist"]["name"],
+        "listeners": parser["artist"]["stats"]["listeners"],
+        "play_count": parser["artist"]["stats"]["playcount"],
+        "summary": parser["artist"]["bio"]["summary"],
+    }
+
+
+artist = input("Please search for an artist: ")
+info = fetch_artist(artist)
+print(info["name"])
+print(info["listeners"])
+print(info["play_count"])
+print(info["summary"])
