@@ -1,13 +1,31 @@
 Screen {
     background: #0a0a0a;
     color: #ffb000;
+    align: center middle;
+}
+
+#title {
+    text-align: center;
+    width: 100%;
+}
+
+#subtitle {
+    text-align: center;
+    width: 100%;
+    color: #a07000;
 }
 
 Input {
     background: #0a0a0a;
     color: #ffb000;
     border: tall #ffb000;
+    width: 50%;
+}
+
+#hint {
+    text-align: center;
     width: 100%;
+    color: #a07000;
 }
 
 Static {

@@ -1,20 +1,35 @@
 from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Footer, Header, Input, Static
+from textual.containers import Center, ScrollableContainer
 
 import fetcher as fe
+
+ascii_logo = """
+ 88888888888     d8888 888b    888 888    d8P         d8888 
+     888        d88888 8888b   888 888   d8P         d88888 
+     888       d88P888 88888b  888 888  d8P         d88P888 
+     888      d88P 888 888Y88b 888 888d88K         d88P 888 
+     888     d88P  888 888 Y88b888 8888888b       d88P  888 
+     888    d88P   888 888  Y88888 888  Y88b     d88P   888 
+     888   d8888888888 888   Y8888 888   Y88b   d8888888888 
+     888  d88P     888 888    Y888 888    Y88b d88P     888 
+"""
 
 
 class SearchScreen(Screen):
     def compose(self) -> ComposeResult:
-        yield Header()
-        yield Static(" Tanka")
-        yield Input(placeholder="Search for an artist...")
-        yield Footer()
+        yield Static(ascii_logo, id="title")
+        yield Static("search any artist on last.fm\n", id="subtitle")
+        with Center():
+            yield Input(placeholder="search...", id="search")
+        yield Static("\n /quit   exit", id="hint")
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         artist = event.value
-        if artist:
+        if artist == "/quit":
+            self.app.exit()
+        elif artist:
             self.app.push_screen(ResultsScreen(artist))
 
 
@@ -32,8 +47,8 @@ class ResultsScreen(Screen):
 
         if info:
             output.append(f" ⌕ {info['name']}")
-            output.append(f" Listeners:  {int(info['listeners']):,}")
-            output.append(f" Play Count: {int(info['play_count']):,}")
+            output.append(f"Listeners:  {int(info['listeners']):,}")
+            output.append(f"Play Count: {int(info['play_count']):,}")
             output.append(f"\n{info['summary']}")
 
         if tracks:
