@@ -2,11 +2,7 @@
 
 A way to search Last.fm via the terminal
 
-<img width="1600" height="900" alt="tanka_demo (1)" src="https://github.com/user-attachments/assets/8d97d6cb-3508-4b9a-8b5d-09c5dfd5995a" />
-
-
-
-
+<img width="800" height="520" alt="tanka_demo" src="https://github.com/user-attachments/assets/fd935b8c-9eb2-4dea-a4d7-7e087bc55452" />
 
 
 ## Requirements
