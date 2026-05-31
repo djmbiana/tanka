@@ -1,3 +1,5 @@
+from concurrent.futures import ThreadPoolExecutor
+
 from textual.app import App, ComposeResult
 from textual.containers import Center, ScrollableContainer
 from textual.screen import Screen
@@ -39,9 +41,13 @@ class ResultsScreen(Screen):
         self.artist = artist
 
     def compose(self) -> ComposeResult:
-        info = fe.fetch_artist(self.artist)
-        tracks = fe.fetch_top_tracks(self.artist)
-        similar = fe.fetch_similar_artists(self.artist)
+        with ThreadPoolExecutor() as executor:
+            future_info = executor.submit(fe.fetch_artist, self.artist)
+            future_tracks = executor.submit(fe.fetch_top_tracks, self.artist)
+            future_similar = executor.submit(fe.fetch_similar_artists, self.artist)
+            info = future_info.result()
+            tracks = future_tracks.result()
+            similar = future_similar.result()
 
         output = []
 
