@@ -22,7 +22,7 @@ Then open .env and add your API key:
 API_KEY=your_key_here
 
 ## Run
-python main.py
+``python main.py``
 
 ## Usage
 - Type an artist name and hit Enter to search
