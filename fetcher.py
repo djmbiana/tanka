@@ -20,8 +20,7 @@ def fetch_artist(artist):
         response.raise_for_status()  # triggers HTTPError on bad status codes
         parser = response.json()
         if "error" in parser:
-            print(f"Error {parser['error']}: {parser['message']}")
-            return None
+            return {"error": parser["message"]}
 
         return {
             "name": parser["artist"]["name"],
@@ -31,17 +30,17 @@ def fetch_artist(artist):
             "summary": remove_html_tags(parser["artist"]["bio"]["summary"]),
         }
     except requests.exceptions.ConnectionError:
-        return "Error: Internet is off"
+        return {"error": "No internet connection"}
     except requests.exceptions.Timeout:
-        return "Error: Request has timed out"
+        return {"error": "Request timed out"}
     except requests.exceptions.TooManyRedirects:
-        return "Error: Too many redirects"
+        return {"error": "Too many redirects"}
     except requests.exceptions.HTTPError as e:
-        return f"HTTP Error {e}"
+        return {"error": f"HTTP error: {e}"}
     except requests.exceptions.JSONDecodeError:
-        return "Error: Could not parse response from LastFM"
+        return {"error": "Could not parse response from Last.fm"}
     except KeyError:
-        return "Error: Artist not found"
+        return {"error": "Artist not found"}
 
 
 def fetch_top_tracks(artist):
@@ -51,8 +50,7 @@ def fetch_top_tracks(artist):
         response.raise_for_status()  # triggers HTTPError on bad status codes
         parser = response.json()
         if "error" in parser:
-            print(f"Error {parser['error']}: {parser['message']}")
-            return None
+            return {"error": parser["message"]}
         tracks = parser["toptracks"]["track"][:5]
         return [
             {
@@ -63,17 +61,17 @@ def fetch_top_tracks(artist):
             for track in tracks
         ]
     except requests.exceptions.ConnectionError:
-        return "Error: Internet is off"
+        return {"error": "No internet connection"}
     except requests.exceptions.Timeout:
-        return "Error: Request has timed out"
+        return {"error": "Request timed out"}
     except requests.exceptions.TooManyRedirects:
-        return "Error: Too many redirects"
+        return {"error": "Too many redirects"}
     except requests.exceptions.HTTPError as e:
-        return f"HTTP Error {e}"
+        return {"error": f"HTTP error: {e}"}
     except requests.exceptions.JSONDecodeError:
-        return "Error: Could not parse response from LastFM"
+        return {"error": "Could not parse response from Last.fm"}
     except KeyError:
-        return "Error: Could not find top tracks"
+        return {"error": "Artist not found"}
 
 
 def fetch_similar_artists(artist):
@@ -83,20 +81,20 @@ def fetch_similar_artists(artist):
         response.raise_for_status()  # triggers HTTPError on bad status codes
         parser = response.json()
         if "error" in parser:
-            print(f"Error {parser['error']}: {parser['message']}")
-            return None
+            return {"error": parser["message"]}
         similar_artists = parser["artist"]["similar"]["artist"][:3]
 
         return [{"name": similar["name"]} for similar in similar_artists]
+
     except requests.exceptions.ConnectionError:
-        return "Error: Internet is off"
+        return {"error": "No internet connection"}
     except requests.exceptions.Timeout:
-        return "Error: Request has timed out"
+        return {"error": "Request timed out"}
     except requests.exceptions.TooManyRedirects:
-        return "Error: Too many redirects"
+        return {"error": "Too many redirects"}
     except requests.exceptions.HTTPError as e:
-        return f"HTTP Error {e}"
+        return {"error": f"HTTP error: {e}"}
     except requests.exceptions.JSONDecodeError:
-        return "Error: Could not parse response from LastFM"
+        return {"error": "Could not parse response from Last.fm"}
     except KeyError:
-        return "Error: Artist not found"
+        return {"error": "Artist not found"}

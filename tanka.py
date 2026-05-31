@@ -45,9 +45,9 @@ class ResultsScreen(Screen):
 
         output = []
 
-        if not info:
-            output.append(f"⚠  artist '{self.artist}' not found")
-            output.append("\ncheck your spelling and try again.")
+        if not info or "error" in info:
+            error_msg = info["error"] if info else "Something went wrong"
+            output.append(f"⚠  {error_msg}")
         else:
             output.append(f"⌕ {info['name']}")
             output.append(f"Listeners:  {int(info['listeners']):,}")
@@ -59,14 +59,14 @@ class ResultsScreen(Screen):
             output.append("\n✑ Artist Summary:")
             output.append(f"\n{info['summary']}")
 
-        if tracks:
+        if tracks and isinstance(tracks, list):
             output.append("\n▶ Top Tracks")
             for i, track in enumerate(tracks, start=1):
                 output.append(
                     f"  {i}. {track['name']} — {int(track['playcount']):,} plays"
                 )
 
-        if similar:
+        if similar and isinstance(similar, list):
             output.append("\n𖠋𖠋𖠋 Similar Artists")
             for s in similar:
                 output.append(f"  ◦ {s['name']}")
