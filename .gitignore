@@ -1,3 +1,5 @@
 .env
 .venv/
 __pycache__
+# this was my inital prints to test my functions
+inital_testing.py 
