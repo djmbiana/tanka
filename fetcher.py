@@ -31,17 +31,17 @@ def fetch_artist(artist):
             "summary": remove_html_tags(parser["artist"]["bio"]["summary"]),
         }
     except requests.exceptions.ConnectionError:
-        print("Error: Internet is off")
+        return "Error: Internet is off"
     except requests.exceptions.Timeout:
-        print("Error: Request has timed out")
+        return "Error: Request has timed out"
     except requests.exceptions.TooManyRedirects:
-        print("Error: Too many redirects")
+        return "Error: Too many redirects"
     except requests.exceptions.HTTPError as e:
-        print(f"HTTP Error {e}")
+        return f"HTTP Error {e}"
     except requests.exceptions.JSONDecodeError:
-        print("Error: Could not parse response from LastFM")
+        return "Error: Could not parse response from LastFM"
     except KeyError:
-        print("Error: Artist not found")
+        return "Error: Artist not found"
 
 
 def fetch_top_tracks(artist):
@@ -63,17 +63,17 @@ def fetch_top_tracks(artist):
             for track in tracks
         ]
     except requests.exceptions.ConnectionError:
-        print("Error: Internet is off")
+        return "Error: Internet is off"
     except requests.exceptions.Timeout:
-        print("Error: Request has timed out")
+        return "Error: Request has timed out"
     except requests.exceptions.TooManyRedirects:
-        print("Error: Too many redirects")
+        return "Error: Too many redirects"
     except requests.exceptions.HTTPError as e:
-        print(f"HTTP Error {e}")
+        return f"HTTP Error {e}"
     except requests.exceptions.JSONDecodeError:
-        print("Error: Could not parse response from LastFM")
+        return "Error: Could not parse response from LastFM"
     except KeyError:
-        print("Error: Could not find top tracks")
+        return "Error: Could not find top tracks"
 
 
 def fetch_similar_artists(artist):
@@ -89,14 +89,14 @@ def fetch_similar_artists(artist):
 
         return [{"name": similar["name"]} for similar in similar_artists]
     except requests.exceptions.ConnectionError:
-        print("Error: Internet is off")
+        return "Error: Internet is off"
     except requests.exceptions.Timeout:
-        print("Error: Request has timed out")
+        return "Error: Request has timed out"
     except requests.exceptions.TooManyRedirects:
-        print("Error: Too many redirects")
+        return "Error: Too many redirects"
     except requests.exceptions.HTTPError as e:
-        print(f"HTTP Error {e}")
+        return f"HTTP Error {e}"
     except requests.exceptions.JSONDecodeError:
-        print("Error: Could not parse response from LastFM")
+        return "Error: Could not parse response from LastFM"
     except KeyError:
-        print("Error: Artist not found")
+        return "Error: Artist not found"
