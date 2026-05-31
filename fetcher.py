@@ -1,10 +1,16 @@
 import os
+import re
 
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 API = os.getenv("API_KEY")
+
+
+# This removes the HTML tags present when bio summary is printed
+def remove_html_tags(summary):
+    return re.sub(r"<.*?>", "", summary).strip()
 
 
 def fetch_artist(artist):
@@ -16,7 +22,7 @@ def fetch_artist(artist):
         "name": parser["artist"]["name"],
         "listeners": parser["artist"]["stats"]["listeners"],
         "play_count": parser["artist"]["stats"]["playcount"],
-        "summary": parser["artist"]["bio"]["summary"],
+        "summary": remove_html_tags(parser["artist"]["bio"]["summary"]),
     }
 
 
