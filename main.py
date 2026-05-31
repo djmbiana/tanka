@@ -1,3 +1,6 @@
+from textual.app import App, ComposeResult
+from textual.widgets import Footer, Header, Input, Label
+
 import fetcher as fe
 
 artist = input("Please search for an artist: ")
@@ -8,7 +11,7 @@ print(" ")
 print("=== Artist Info ===")
 if info:
     print(info["name"])
-    print(f"Listners: {int(info['listeners']):,}")
+    print(f"Listeners: {int(info['listeners']):,}")
     print(f"Play Count: {int(info['play_count']):,}")
     print(info["summary"])
 
