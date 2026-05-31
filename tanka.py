@@ -45,7 +45,10 @@ class ResultsScreen(Screen):
 
         output = []
 
-        if info:
+        if not info:
+            output.append(f"⚠  artist '{self.artist}' not found")
+            output.append("\ncheck your spelling and try again.")
+        else:
             output.append(f"⌕ {info['name']}")
             output.append(f"Listeners:  {int(info['listeners']):,}")
             output.append(f"Play Count: {int(info['play_count']):,}")
