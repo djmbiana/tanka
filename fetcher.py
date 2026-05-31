@@ -27,6 +27,7 @@ def fetch_artist(artist):
             "name": parser["artist"]["name"],
             "listeners": parser["artist"]["stats"]["listeners"],
             "play_count": parser["artist"]["stats"]["playcount"],
+            "tags": [tag["name"] for tag in parser["artist"]["tags"]["tag"]],
             "summary": remove_html_tags(parser["artist"]["bio"]["summary"]),
         }
     except requests.exceptions.ConnectionError:
