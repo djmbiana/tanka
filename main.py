@@ -8,8 +8,8 @@ print(" ")
 print("=== Artist Info ===")
 if info:
     print(info["name"])
-    print(info["listeners"])
-    print(info["play_count"])
+    print(f"Listners: {int(info['listeners']):,}")
+    print(f"Play Count: {int(info['play_count']):,}")
     print(info["summary"])
 
 print(" ")
@@ -17,10 +17,10 @@ print("=== Top Tracks ===")
 if tracks:
     for i, track in enumerate(tracks, start=1):
         print(
-            f"{i}. {track['name']} — {track['playcount']} plays | {track['listeners']} listeners"
+            f"{i}. {track['name']} - {int(track['playcount']):,} plays | {int(track['listeners']):,} listeners"
         )
 print(" ")
 print("=== Similar Artists ===")
 if similar_artists:
     for i, similar in enumerate(similar_artists, start=1):
-        print(f"{i}. {similar['name']}")
+        print(f"◦ {similar['name']}")
