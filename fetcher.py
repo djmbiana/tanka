@@ -14,21 +14,39 @@ def remove_html_tags(summary):
 
 
 def fetch_artist(artist):
-    url = f"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={API}&format=json"
-    response = requests.get(url)
-    parser = response.json()
+    try:
+        url = f"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={API}&format=json"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()  # triggers HTTPError on bad status codes
+        parser = response.json()
+        if "error" in parser:
+            print(f"Error {parser['error']}: {parser['message']}")
+            return None
 
-    return {
-        "name": parser["artist"]["name"],
-        "listeners": parser["artist"]["stats"]["listeners"],
-        "play_count": parser["artist"]["stats"]["playcount"],
-        "summary": remove_html_tags(parser["artist"]["bio"]["summary"]),
-    }
+        return {
+            "name": parser["artist"]["name"],
+            "listeners": parser["artist"]["stats"]["listeners"],
+            "play_count": parser["artist"]["stats"]["playcount"],
+            "summary": remove_html_tags(parser["artist"]["bio"]["summary"]),
+        }
+    except requests.exceptions.ConnectionError:
+        print("Error: Internet is off")
+    except requests.exceptions.Timeout:
+        print("Error: Request has timed out")
+    except requests.exceptions.TooManyRedirects:
+        print("Error: Too many redirects")
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP Error {e}")
+    except requests.exceptions.JSONDecodeError:
+        print("Error: Could not parse response from LastFM")
+    except KeyError:
+        print("Error: Artist not found")
 
 
 artist = input("Please search for an artist: ")
 info = fetch_artist(artist)
-print(info["name"])
-print(info["listeners"])
-print(info["play_count"])
-print(info["summary"])
+if info:
+    print(info["name"])
+    print(info["listeners"])
+    print(info["play_count"])
+    print(info["summary"])
