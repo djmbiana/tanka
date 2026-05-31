@@ -1,7 +1,7 @@
 from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Footer, Header, Input, Static
 from textual.containers import Center, ScrollableContainer
+from textual.screen import Screen
+from textual.widgets import Input, Static
 
 import fetcher as fe
 
@@ -64,7 +64,7 @@ class ResultsScreen(Screen):
                 output.append(f"  ◦ {s['name']}")
 
         output.append("\n\n ← (esc) back to search")
-        yield ScrollableContainer(Static("\n".join(output)))
+        yield ScrollableContainer(Static("\n".join(output)), id="results")
 
     def on_key(self, event) -> None:
         if event.key == "escape":

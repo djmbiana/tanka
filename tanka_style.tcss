@@ -32,10 +32,8 @@ Static {
     color: #ffb000;
 }
 
-Header {
-    display: none;
-}
-
-Footer {
-    display: none;
+#results {
+    width: 70%;
+    margin: 0 15;
+    padding: 1 4;
 }
