@@ -49,6 +49,11 @@ class ResultsScreen(Screen):
             output.append(f"⌕ {info['name']}")
             output.append(f"Listeners:  {int(info['listeners']):,}")
             output.append(f"Play Count: {int(info['play_count']):,}")
+            if info["tags"]:
+                output.append(
+                    f"\n♫ Genres: {' · '.join(tag.lower() for tag in info['tags'])}"
+                )
+            output.append("\n✑ Artist Summary:")
             output.append(f"\n{info['summary']}")
 
         if tracks:
