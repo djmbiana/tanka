@@ -7,13 +7,13 @@ A way to search Last.fm via the terminal
 - A Last.fm API key (create one at [last.fm/api](https://www.last.fm/api)
 
 ## Setup
-``bash
+```bash
 git clone https://github.com/djmbiana/tanka.git
 cd tanka
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-``
+```
 
 ## Configuration
 cp .env.example .env
