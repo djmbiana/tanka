@@ -14,6 +14,10 @@ def remove_html_tags(summary):
 
 
 def fetch_artist(artist):
+    """
+    Makes a request via the LastFM api and parses the name, listeners, play count, tags, and artist summary for a
+    searched artist
+    """
     try:
         url = f"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={API}&format=json"
         response = requests.get(url, timeout=10)
@@ -44,6 +48,9 @@ def fetch_artist(artist):
 
 
 def fetch_top_tracks(artist):
+    """
+    Fetches the top 5 tracks of an artist via the last.fm api
+    """
     try:
         url = f"https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist={artist}&api_key={API}&format=json"
         response = requests.get(url, timeout=10)
@@ -75,6 +82,9 @@ def fetch_top_tracks(artist):
 
 
 def fetch_similar_artists(artist):
+    """
+    Fetches 3 similar artists via the lastfm api
+    """
     try:
         url = f"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={API}&format=json"
         response = requests.get(url, timeout=10)
