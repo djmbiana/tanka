@@ -28,12 +28,17 @@ Input {
     color: #a07000;
 }
 
+ScrollableContainer {
+    scrollbar-color: #ffb000;
+    scrollbar-color-hover: #ffb000;
+    scrollbar-size: 1 1;
+}
+
 Static {
     color: #ffb000;
 }
 
 #results {
-    width: 70%;
-    margin: 0 15;
-    padding: 1 4;
+    width: 100%;
+    padding: 1 8;
 }
