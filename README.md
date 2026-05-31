@@ -7,7 +7,7 @@ A way to search Last.fm via the terminal
 
 ## Requirements
 - Python 3.10+
-- A Last.fm API key (create one at [last.fm/api](https://www.last.fm/api)
+- A Last.fm API key (create one at [last.fm/api](https://www.last.fm/api))
 
 ## Setup
 ```bash
