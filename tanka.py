@@ -46,26 +46,25 @@ class ResultsScreen(Screen):
         output = []
 
         if info:
-            output.append(f" ⌕ {info['name']}")
+            output.append(f"⌕ {info['name']}")
             output.append(f"Listeners:  {int(info['listeners']):,}")
             output.append(f"Play Count: {int(info['play_count']):,}")
             output.append(f"\n{info['summary']}")
 
         if tracks:
-            output.append("\n ▶ Top Tracks")
+            output.append("\n▶ Top Tracks")
             for i, track in enumerate(tracks, start=1):
                 output.append(
                     f"  {i}. {track['name']} — {int(track['playcount']):,} plays"
                 )
 
         if similar:
-            output.append("\n 𖠋𖠋𖠋 Similar Artists")
+            output.append("\n𖠋𖠋𖠋 Similar Artists")
             for s in similar:
                 output.append(f"  ◦ {s['name']}")
 
-        yield Header()
-        yield Static("\n".join(output))
-        yield Footer()
+        output.append("\n\n ← (esc) back to search")
+        yield ScrollableContainer(Static("\n".join(output)))
 
     def on_key(self, event) -> None:
         if event.key == "escape":
