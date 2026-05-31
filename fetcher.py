@@ -75,9 +75,39 @@ def fetch_top_tracks(artist):
         print("Error: Could not find top tracks")
 
 
+def fetch_similar_artists(artist):
+    try:
+        url = f"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={API}&format=json"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()  # triggers HTTPError on bad status codes
+        parser = response.json()
+        if "error" in parser:
+            print(f"Error {parser['error']}: {parser['message']}")
+            return None
+        similar_artists = parser["artist"]["similar"]["artist"][:3]
+
+        return [{"name": similar["name"]} for similar in similar_artists]
+    except requests.exceptions.ConnectionError:
+        print("Error: Internet is off")
+    except requests.exceptions.Timeout:
+        print("Error: Request has timed out")
+    except requests.exceptions.TooManyRedirects:
+        print("Error: Too many redirects")
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP Error {e}")
+    except requests.exceptions.JSONDecodeError:
+        print("Error: Could not parse response from LastFM")
+    except KeyError:
+        print("Error: Artist not found")
+
+
+"""
+Inputs
+"""
 artist = input("Please search for an artist: ")
 info = fetch_artist(artist)
 tracks = fetch_top_tracks(artist)
+similar_artists = fetch_similar_artists(artist)
 print(" ")
 print("=== Artist Info ===")
 if info:
@@ -93,3 +123,8 @@ if tracks:
         print(
             f"{i}. {track['name']} — {track['playcount']} plays | {track['listeners']} listeners"
         )
+print(" ")
+print("=== Similar Artists ===")
+if similar_artists:
+    for i, similar in enumerate(similar_artists, start=1):
+        print(f"{i}. {similar['name']}")
